@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Our Little Story 🌸</title>
+<title>mwah 🌸</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -71,11 +71,10 @@
 <div id="petals"></div>
 
 <section id="page-calendar">
-  <p class="top-note">a little something, just for us ♡</p>
+  <p class="top-note">a little something, just for u</p>
   <div class="cal-card">
     <div class="cal-header">
-      <h2>June 2025</h2>
-      <p>our anniversary month</p>
+      <h2>June 2026</h2>
     </div>
     <div class="cal-weekdays">
       <span>Su</span><span>Mo</span><span>Tu</span><span>We</span>
@@ -83,14 +82,14 @@
     </div>
     <div class="cal-grid" id="cal-grid"></div>
   </div>
-  <p class="hint-text">tap on June 4th to open our story ♡</p>
+  <p class="hint-text">tap on June 4th ♡</p>
 </section>
 
 <section id="page-dedication">
   <div class="dedication-inner">
     <div class="hearts-row">♡ ♡ ♡</div>
     <h1>3 months of <em>you</em> and me</h1>
-    <p>From the very first day, you made everything feel a little warmer, a little softer, a little more like home. Here's to every moment we've already made — and every one still to come.</p>
+    <p>crazy how its been 3 months since "hey, are you busy can i sit here?" thank you for being the most unexpected plot twist of my 2026. i love you to bits and pieces my love i love you so so so so soooo much mwah mwah mwah</p>
     <a class="scroll-btn" href="#page-gallery">see our memories ↓</a>
   </div>
 </section>
@@ -98,15 +97,15 @@
 <section id="page-gallery">
   <div class="gallery-header">
     <h2>our little gallery</h2>
-    <p>every moment, kept safe ♡</p>
+    <p>ok so this lwk got me inspired to build like a lil digtal archive for us but im starting to realise that im not smart enough 😭, but its in the works, hopefully ill have that down by our 1yr or smth idk im sorry, take this lil gallery for now </p>
   </div>
   <div class="gallery-grid" id="gallery-grid"></div>
 </section>
 
-<footer>made with love, just for you ♡</footer>
+<footer>made with love, mwah mwah mwah ♡</footer>
 
 <script>
-const BASE = 'https://raw.githubusercontent.com/yoshita2417/our-anniversary/main/';
+const BASE = 'https://raw.githubusercontent.com/yoshita2417/hehe/main/';
 
 const media = [
   { src: BASE + 'photo1.jpg', type: 'image', wide: true,  caption: '' },
@@ -135,7 +134,8 @@ for (let i = 0; i < 18; i++) {
 
 // ── CALENDAR ──
 const grid = document.getElementById('cal-grid');
-for (let d = 1; d <= 30; d++) {
+for (let i = 0; i < 1; i++) { const e = document.createElement('div'); e.className = 'cal-day empty'; grid.appendChild(e); }
+for (let d = 1; d <= 30; d++) { 
   const el = document.createElement('div');
   el.className = 'cal-day' + (d === 4 ? ' special' : '');
   el.textContent = d;
