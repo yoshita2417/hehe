@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Little Story 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --pink: #f9e4ec; --pink-mid: #f2c4d8; --pink-deep: #d48aab;
+    --beige: #fdf6f0; --beige-mid: #f0e6da; --cream: #fffaf7;
+    --text-dark: #4a3540; --text-mid: #8a6070; --text-light: #b89aaa;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--beige); color: var(--text-dark); min-height: 100vh; }
+
+  .petal { position: fixed; width: 10px; height: 14px; background: var(--pink-mid); border-radius: 50% 0 50% 0; opacity: 0; pointer-events: none; z-index: 0; animation: fall linear infinite; }
+  @keyframes fall { 0% { transform: translateY(-20px) rotate(0deg); opacity: 0.7; } 100% { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
+
+  #page-calendar { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem 1rem; position: relative; overflow: hidden; background: var(--cream); }
+  .top-note { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.1rem; color: var(--text-light); letter-spacing: 0.05em; margin-bottom: 2.5rem; text-align: center; }
+  .cal-card { background: white; border-radius: 24px; padding: 2rem 2.5rem; box-shadow: 0 8px 40px rgba(180,120,150,0.10); max-width: 420px; width: 100%; }
+  .cal-header { text-align: center; margin-bottom: 1.5rem; }
+  .cal-header h2 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; color: var(--text-dark); letter-spacing: 0.1em; }
+  .cal-header p { font-size: 0.78rem; color: var(--text-light); letter-spacing: 0.15em; text-transform: uppercase; margin-top: 4px; }
+  .cal-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; margin-bottom: 0.5rem; }
+  .cal-weekdays span { font-size: 0.7rem; letter-spacing: 0.1em; color: var(--text-light); text-transform: uppercase; padding: 4px 0; }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .cal-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 0.88rem; color: var(--text-mid); border-radius: 50%; cursor: default; transition: background 0.2s; position: relative; }
+  .cal-day:not(.empty):not(.special):hover { background: var(--pink); }
+  .cal-day.special { background: var(--pink-deep); color: white; font-weight: 600; cursor: pointer; animation: heartbeat 2.2s ease-in-out infinite; box-shadow: 0 0 0 4px var(--pink-mid), 0 0 0 7px var(--pink); }
+  .cal-day.special::after { content: '♥'; position: absolute; top: -14px; font-size: 10px; color: var(--pink-deep); animation: floatHeart 2.2s ease-in-out infinite; }
+  @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+  @keyframes floatHeart { 0%, 100% { transform: translateY(0); opacity: 1; } 50% { transform: translateY(-4px); opacity: 0.7; } }
+  .hint-text { text-align: center; margin-top: 2rem; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.95rem; color: var(--text-light); letter-spacing: 0.05em; animation: pulse-hint 3s ease-in-out infinite; }
+  @keyframes pulse-hint { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+
+  #page-dedication { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(160deg, var(--pink) 0%, var(--cream) 60%, var(--beige-mid) 100%); padding: 3rem 1.5rem; opacity: 0; transform: translateY(30px); transition: opacity 0.9s ease, transform 0.9s ease; }
+  #page-dedication.visible { opacity: 1; transform: translateY(0); }
+  .dedication-inner { max-width: 500px; text-align: center; }
+  .dedication-inner .hearts-row { font-size: 1.4rem; letter-spacing: 0.3em; margin-bottom: 2rem; color: var(--pink-deep); }
+  .dedication-inner h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 6vw, 3.2rem); font-weight: 300; line-height: 1.2; color: var(--text-dark); margin-bottom: 1.5rem; }
+  .dedication-inner h1 em { font-style: italic; color: var(--pink-deep); }
+  .dedication-inner p { font-size: 1rem; color: var(--text-mid); line-height: 1.8; margin-bottom: 2.5rem; }
+  .scroll-btn { display: inline-block; padding: 0.75rem 2.2rem; background: transparent; border: 1.5px solid var(--pink-deep); border-radius: 50px; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; letter-spacing: 0.1em; color: var(--pink-deep); cursor: pointer; text-transform: uppercase; transition: all 0.3s ease; text-decoration: none; }
+  .scroll-btn:hover { background: var(--pink-deep); color: white; }
+
+  #page-gallery { background: var(--beige); padding: 4rem 1.5rem 6rem; }
+  .gallery-header { text-align: center; margin-bottom: 3rem; }
+  .gallery-header h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 5vw, 2.6rem); font-weight: 300; color: var(--text-dark); margin-bottom: 0.5rem; }
+  .gallery-header p { font-size: 0.85rem; color: var(--text-light); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  .gallery-grid { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; }
+  .media-card { border-radius: 16px; overflow: hidden; background: white; box-shadow: 0 4px 20px rgba(180,120,150,0.08); opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s; }
+  .media-card.visible { opacity: 1; transform: translateY(0); }
+  .media-card:hover { box-shadow: 0 8px 32px rgba(180,120,150,0.18); transform: translateY(-4px); }
+  .media-card.wide { grid-column: span 2; }
+  .media-slot { width: 100%; aspect-ratio: 4/3; background: var(--pink); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; position: relative; overflow: hidden; }
+  .media-slot.video-slot { background: var(--beige-mid); }
+  .media-slot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  .media-slot video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .card-caption { padding: 0.85rem 1rem; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: var(--text-mid); }
+
+  footer { text-align: center; padding: 2rem; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: var(--text-light); }
+  @media (max-width: 600px) { .cal-card { padding: 1.5rem; } .media-card.wide { grid-column: span 1; } .gallery-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div id="petals"></div>
+
+<section id="page-calendar">
+  <p class="top-note">a little something, just for us ♡</p>
+  <div class="cal-card">
+    <div class="cal-header">
+      <h2>June 2025</h2>
+      <p>our anniversary month</p>
+    </div>
+    <div class="cal-weekdays">
+      <span>Su</span><span>Mo</span><span>Tu</span><span>We</span>
+      <span>Th</span><span>Fr</span><span>Sa</span>
+    </div>
+    <div class="cal-grid" id="cal-grid"></div>
+  </div>
+  <p class="hint-text">tap on June 4th to open our story ♡</p>
+</section>
+
+<section id="page-dedication">
+  <div class="dedication-inner">
+    <div class="hearts-row">♡ ♡ ♡</div>
+    <h1>3 months of <em>you</em> and me</h1>
+    <p>From the very first day, you made everything feel a little warmer, a little softer, a little more like home. Here's to every moment we've already made — and every one still to come.</p>
+    <a class="scroll-btn" href="#page-gallery">see our memories ↓</a>
+  </div>
+</section>
+
+<section id="page-gallery">
+  <div class="gallery-header">
+    <h2>our little gallery</h2>
+    <p>every moment, kept safe ♡</p>
+  </div>
+  <div class="gallery-grid" id="gallery-grid"></div>
+</section>
+
+<footer>made with love, just for you ♡</footer>
+
+<script>
+const BASE = 'https://raw.githubusercontent.com/yoshita2417/our-anniversary/main/';
+
+const media = [
+  { src: BASE + 'photo1.jpg', type: 'image', wide: true,  caption: '' },
+  { src: BASE + 'photo2.jpg', type: 'image', wide: false, caption: '' },
+  { src: BASE + 'photo3.jpg', type: 'image', wide: false, caption: '' },
+  { src: BASE + 'photo4.jpg', type: 'image', wide: false, caption: '' },
+  { src: BASE + 'photo5.jpg', type: 'image', wide: false, caption: '' },
+  { src: BASE + 'photo6.jpg', type: 'image', wide: false, caption: '' },
+  { src: BASE + 'photo7.png', type: 'image', wide: false, caption: '' },
+  { src: BASE + 'photo8.png', type: 'image', wide: true,  caption: '' },
+  { src: BASE + 'vid1.mp4',  type: 'video', wide: true,  caption: '' },
+];
+
+// ── PETALS ──
+const pc = document.getElementById('petals');
+for (let i = 0; i < 18; i++) {
+  const p = document.createElement('div');
+  p.className = 'petal';
+  p.style.left = Math.random() * 100 + 'vw';
+  p.style.width = (8 + Math.random() * 8) + 'px';
+  p.style.height = (10 + Math.random() * 10) + 'px';
+  p.style.animationDuration = (6 + Math.random() * 8) + 's';
+  p.style.animationDelay = (Math.random() * 10) + 's';
+  pc.appendChild(p);
+}
+
+// ── CALENDAR ──
+const grid = document.getElementById('cal-grid');
+for (let d = 1; d <= 30; d++) {
+  const el = document.createElement('div');
+  el.className = 'cal-day' + (d === 4 ? ' special' : '');
+  el.textContent = d;
+  if (d === 4) { el.addEventListener('click', openStory); }
+  grid.appendChild(el);
+}
+function openStory() {
+  const ded = document.getElementById('page-dedication');
+  ded.scrollIntoView({ behavior: 'smooth' });
+  setTimeout(() => ded.classList.add('visible'), 400);
+}
+
+// ── GALLERY ──
+const gg = document.getElementById('gallery-grid');
+media.forEach((m, i) => {
+  const card = document.createElement('div');
+  card.className = 'media-card' + (m.wide ? ' wide' : '');
+
+  const slot = document.createElement('div');
+  slot.className = 'media-slot' + (m.type === 'video' ? ' video-slot' : '');
+
+  if (m.type === 'video') {
+    const vid = document.createElement('video');
+    vid.src = m.src; vid.controls = true; vid.loop = true; vid.preload = 'metadata';
+    slot.appendChild(vid);
+  } else {
+    const img = document.createElement('img');
+    img.src = m.src; img.alt = m.caption || '';
+    img.loading = 'lazy';
+    slot.appendChild(img);
+  }
+
+  const cap = document.createElement('div');
+  cap.className = 'card-caption';
+  cap.textContent = m.caption;
+
+  card.appendChild(slot);
+  if (m.caption) card.appendChild(cap);
+  card.style.transitionDelay = (i * 80) + 'ms';
+  gg.appendChild(card);
+});
+
+// scroll reveal
+const obs = new IntersectionObserver((evs) => {
+  evs.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.media-card').forEach(c => obs.observe(c));
+</script>
+</body>
+</html>
